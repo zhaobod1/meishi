@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$page_title} 触屏版</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css?id=1212" rel="stylesheet" type="text/css" />
+{* 包含脚本文件 *}
+
+
+
+<!-- {if $action eq 'update_agent'} -->
+<script src="{$ectouch_themes}/js/huo15jq.js"></script>
+<script type="text/javascript" src="{$ectouch_themes}/js/huo15-ui.js"></script>
+<script type="text/javascript" src="{$ectouch_themes}/js/datepicker-zh-CN.js"></script>
+<link href="{$ectouch_themes}/css/huo15-ui.css" rel="stylesheet" type="text/css" />
+<!-- {else} -->
+{insert_scripts files='transport.js,common.js,user.js'}
+<script type="text/javascript" src="{$ectouch_themes}/js/jquery-1.4.4.min.js"></script>
+<!-- {/if} -->
+<style>
+.is_ok {
+	height:30px;
+	margin-bottom:2px;
+	font-family:"黑体";
+}
+#is_ok_btn {
+	float:right;
+	margin-right:30px;
+}
+.label {
+	height:3em;
+}
+</style>
+
+
+
+</head>
+<body>
+<!-- *用户中心默认显示页面 start--> 
+<!-- {if $action eq 'default'} -->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <h1> 代理中心 </h1>
+</header>
+<dl class="user_top">
+  <dt> {if $imgUrl}<img src="{$imgUrl}">{else}<img src="{$ectouch_themes}/images/get_avatar.png">{/if} </dt>
+  <dd>
+    <p>{$info.username}</p>
+    <p><span>{$tianxin}</span></p>
+  </dd>
+  <div class="user_distri_list">
+    <ul>
+      <li> 累计销售：<span style="color:red">￥{$agent_money_sum}</span></li>
+    </ul>
+  </div>
+  <div class="quan1"></div>
+  <div class="quan2"></div>
+  <div class="quan3"></div>
+</dl>
+<div class="blank3"></div>
+{if $is_ok}
+<section class="wrap">
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
+    <ul>
+	 <li><span class="uninclude">&nbsp; &nbsp; </span><span>代理中心</span>
+        <div class="son_list">
+          <ul>
+            <li onclick="location.href='distribute.php?act=generate&u={$user_id}'"><span class="icon">&nbsp; &nbsp; </span><span>我的邀请链接</span> <i></i></li>
+            <!--<li onclick="location.href='user.php?act=dianpu'"><span class="icon">&nbsp; &nbsp; </span><span>修改店铺名</span> <i></i></li>-->
+			 <li onclick="location.href='user.php'"><span class="icon">&nbsp; &nbsp; </span><span>个人中心</span> <i></i></li>
+             <li onclick="location.href='user.php?act=trace'"><span class="icon">&nbsp; &nbsp; </span><span>产品追溯</span> <i></i></li>
+          </ul>
+        </div>
+      </li>
+	
+      <li><span class="uninclude">&nbsp; &nbsp; </span><span>我的代理商</span> <span class="person">{$total_agent}人</span>
+      
+      
+      
+     <div style="background:#eee; margin:1em 1em;">概览</div>
+      
+     {foreach from=$agents item=v key=brand_key} 
+    
+     
+      <div class="son_list">
+      {if $v.sum}
+          <ul>
+		   
+		   
+		    <li onclick="location.href='distribute.php?act=vertifing&brand={$brand_key}'"><span class="icon">&nbsp; &nbsp; </span><span>{$brand_key}</span> <i></i><span class="sp">{$v.sum}人</span></li>
+		
+          </ul>
+          {/if}
+        </div>
+      
+      <!--  审核名录-->
+      {/foreach}
+         
+      
+      <div style="background:#eee; margin:1em 1em;">注意</div> 
+      <div class="son_list">
+          <ul>
+		   
+		   
+		    <li onclick="location.href='distribute.php?act=vertifing'"><span class="icon">&nbsp; &nbsp; </span><span>未审核人数</span> <i></i><span class="sp">{if $total_vertifing neq ''}{$total_vertifing}{else}0{/if}人</span></li>
+		
+          </ul>
+        </div> 
+      
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        
+      </li>
+	  
+	  <!--
+      <li><span class="uninclude">&nbsp; &nbsp; </span><span>我的推广</span></li>
+        <div class="son_list">
+          <ul>
+            <li><span class="icon1">&nbsp; &nbsp; </span><span>点击量</span> <span class="sp">2人</span></li>
+            <li><span class="icon1">&nbsp; &nbsp; </span><span>关注量</span> <span class="sp">1人</span></li>
+            <li><span class="icon1">&nbsp; &nbsp; </span><span>成为分销会员</span> <span class="sp">1人</span></li>
+          </ul>
+        </div>
+        -->
+      <li id="self_list"><span class="uninclude">&nbsp; &nbsp; </span><span>垂直</span>业务 <span class="person">{$user_order_num}</span></li>
+      	<div class="son_list">
+          <ul>
+              <li id="self_add_order"><span class="icon2" >&nbsp; &nbsp; </span><span>添加订单</span> <span class="sp">》</span></li>
+              <li id="self_scan_order"><span class="icon2" >&nbsp; &nbsp; </span><span>扫码未完结订单</span> <span class="sp">{$user_order_scan_num}</span></li>
+               <li id="self_end_order"><span class="icon2" >&nbsp; &nbsp; </span><span>已发货订单</span> <span class="sp">{$user_order_end_num}</span></li>
+                 
+          </ul>
+        </div>
+      <li id="agent_money_sum"><span class="uninclude">&nbsp; &nbsp; </span><span>代理商</span>业务 <span class="person">￥{$agent_money_sum}</span></li>
+        <div class="son_list">
+          <ul>
+          <li id="agent_add_order"><span class="icon2" >&nbsp; &nbsp; </span><span>添加订单</span> <span class="sp">》</span></li>
+			
+          <li id="agent_scan_list"><span class="icon2">&nbsp; &nbsp; </span><span>扫码未完结订单</span> <span class="sp">￥{$agent_scan_sum}</span></li>
+            <li id="agent_unpay_list"><span class="icon2">&nbsp; &nbsp; </span><span>未付款订单</span> <span class="sp">￥{$agent_unpay_sum}</span></li>
+            <li id="agent_pay_list"><span class="icon2">&nbsp; &nbsp; </span><span>已付款订单</span> <span class="sp">￥{$agent_pay_sum}</span></li>
+            <li id="agent_done_list"><span class="icon2" >&nbsp; &nbsp; </span><span>已发货订单</span> <span class="sp">￥{$agent_done_sum}</span></li>
+			
+			<!--
+            <li><span class="icon2">&nbsp; &nbsp; </span><span>已审核订单佣金</span> <span class="sp">￥177.6</span></li>-->
+          </ul>
+        </div>
+      <!--<li onclick="location.href='distribute.php?act=account_raply';"><span class="uninclude">&nbsp; &nbsp; </span><span>申请提现</span></li>-->
+    </ul>
+  </div>
+  
+  
+  {/if}
+  <div class="blank3"></div>
+  <div class="blank3"></div>
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
+    <!-- <a href="user.php?act=track_packages" class="clearfix">
+				<span></span><i></i>
+			</a>  --> 
+ </div>
+</section>
+
+<!-- {/if} --> 
+ 
+ 
+ 
+
+
+
+
+
+
+
+<!-- /一级分销 S--> 
+<!-- {if $action eq 'vertifing'} --> 
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <h1>{if $huo15_vertifing_agent}未审核通过的代理商{else}我的下级代理商申请人{/if}</h1>
+</header>
+<!--详细下线记录by huo15-->
+<section class="class="wrap"">
+<div class="content">
+
+  <img src="{$user.head_url}"  border="0">
+ 
+  {foreach from=$arr_info item=user}
+   <a href="distribute.php?act=update_agent&user_id={$user.user_id}">
+   
+       	<dl>
+            	<dt>{if $user.head_url neq ''}{else}<img src="{$ectouch_themes}/images/get_avatar.png"  border="0">{/if}</dt>
+                <dd style="float:right"><h3> {if $user.is_ok}<span style="color:red">已经审核</span>{else}审核未通过 {/if}</h3></dd>
+               
+                <div class="fl">
+                  <h3>&nbsp;会&nbsp;员&nbsp;名：{if  $user.nickname}{$user.nickname}{else}{$user.user_name}{/if}</h3>
+                  <h3>代理品牌：{$user.agent_brand}</h3>
+                 
+                  <h3>订单数量：{$user.order_num}</h3>
+                  
+                  
+                <p>
+    </p></div>
+    
+            </dl>
+        </a>
+      <!--  {if $user.is_ok eq '1'}
+        <a href="distribute.php?act=myorder&user_id={$user.user_id}&level={$user.agent_level}">订单详情</a>
+        {/if}-->
+       
+	{foreachelse}
+  <div class="no-records" colspan="10" align="center">{$lang.no_records}</div>
+  {/foreach}
+  </div>
+</section>
+<!-- {/if} --> 
+<!-- /一级分销 	E--> 
+
+<!-- /二级分销 S--> 
+<!-- {if $action eq 'fenxiao2'} --> 
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <h1> 我的分销二级会员{$count}人</h1>
+</header>
+<!--详细下线记录by  tianxin100-->
+<section class="class="wrap"">
+<div class="content">
+  {foreach from=$user_list item=user}
+   
+    	<a href="distribute.php?act=myorder&user_id={$user.user_id}&level={$user.level}">
+        	<dl>
+            	<dt>{if $user.head_url neq ''}<img src="{$user.head_url}"  border="0">{else}<img src="{$ectouch_themes}/images/get_avatar.png"  border="0">{/if}</dt>
+                <div>
+                  <h3>&nbsp;会&nbsp;员&nbsp;名：{if  $user.nickname}{$user.nickname}{else}{$user.user_name}{/if}</h3>
+                  <h3>订单数量：{$user.order_num}</h3>
+                  <h3>提成金额：{$user.setmoney}</h3>
+                <p>
+    </p></div>
+            </dl>
+        </a>
+	{foreachelse}
+  <div class="no-records" colspan="10" align="center">{$lang.no_records}</div>
+  {/foreach}
+  </div>
+</section>
+<!-- {/if} --> 
+<!-- /二级分销 	E--> 
+
+<!-- /三级分销 S--> 
+<!-- {if $action eq 'fenxiao3'} --> 
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <h1> 我的分销三级会员{$count}人</h1>
+</header>
+<!--详细下线记录by  tianxin100-->
+<section class="class="wrap"">
+<div class="content">
+  {foreach from=$user_list item=user}
+   
+    	<a href="distribute.php?act=myorder&user_id={$user.user_id}&level={$user.level}">
+        	<dl>
+            	<dt>{if $user.head_url neq ''}<img src="{$user.head_url}"  border="0">{else}<img src="{$ectouch_themes}/images/get_avatar.png"  border="0">{/if}</dt>
+                <div>
+                  <h3>&nbsp;会&nbsp;员&nbsp;名：{if  $user.nickname}{$user.nickname}{else}{$user.user_name}{/if}</h3>
+                  <h3>订单数量：{$user.order_num}</h3>
+                  <h3>提成金额：{$user.setmoney}</h3>
+                <p>
+    </p></div>
+            </dl>
+        </a>
+	{foreachelse}
+  <div class="no-records" colspan="10" align="center">{$lang.no_records}</div>
+  {/foreach}
+  </div>
+</section>
+<!-- {/if} --> 
+<!-- /三级分销 	E-->
+<!-- /四级分销 S--> 
+<!-- {if $action eq 'fenxiao4'} --> 
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <h1> 我的分销四级会员{$count}人</h1>
+</header>
+<!--详细下线记录by  tianxin100-->
+<section class="class="wrap"">
+<div class="content">
+  {foreach from=$user_list item=user}
+   
+    	<a href="distribute.php?act=myorder&user_id={$user.user_id}&level={$user.level}">
+        	<dl>
+            	<dt>{if $user.head_url neq ''}<img src="{$user.head_url}"  border="0">{else}<img src="{$ectouch_themes}/images/get_avatar.png"  border="0">{/if}</dt>
+                <div>
+                  <h3>&nbsp;会&nbsp;员&nbsp;名：{if  $user.nickname}{$user.nickname}{else}{$user.user_name}{/if}</h3>
+                  <h3>订单数量：{$user.order_num}</h3>
+                  <h3>提成金额：{$user.setmoney}</h3>
+                <p>
+    </p></div>
+            </dl>
+        </a>
+	{foreachelse}
+  <div class="no-records" colspan="10" align="center">{$lang.no_records}</div>
+  {/foreach}
+  </div>
+</section>
+<!-- {/if} --> 
+<!-- /四级分销 	E-->
+<!-- /五级分销 S--> 
+
+
+
+
+
+
+
+
+
+
+<!--  huo15 用户个人信息修改页面 -->
+<!-- {if $action eq 'update_user'} -->
+<form method="post" action="user.php" name="theForm" onsubmit="return validate()" enctype="multipart/form-data">
+<table width="100%" >
+  <tr>
+    <td class="label">{$lang.username}:</td>
+    <td>{if $form_action eq "update"}{$user.user_name}<input type="hidden" name="username" value="{$user.user_name}" />{else}<input type="text" name="username" maxlength="60" value="{$user.user_name}" />{$lang.require_field}{/if}</td>
+  </tr>
+    <tr style="display:none">
+    <td class="label">会员号:</td>
+    <td>{$user.user_num}</td>
+  </tr>
+  <!-- 下拉菜单 代理品牌和等级 huo15 -->
+  <script>
+   {foreach from=$arrBAndL item=BAndL  key=key}
+   	var agent_level_option_s{$key} = {$BAndL.start_num};
+    var agent_level_option_d{$key} = {$BAndL.end_num};
+   {/foreach}
+   
+   </script>
+   
+   
+  
+  
+   <script>
+    	var brand_name_option = '';
+    </script>
+  {foreach from=$arrBAndL item=BAndL  key=key}
+  
+   
+ 
+  
+  
+  
+  
+ {/foreach}
+ <script>
+ $(function () {
+ {foreach from=$user.brand_info item=user  key=k}
+ 	var agent_brand{$k} = '{$user.agent_brand}';
+    var agent_level{$k} = {$user.agent_level};
+	var agent_is_ok{$k} = {$user.is_ok};
+	
+	 //更改选择项目
+	 $('[name="agent_brand{$k}"]').find('option[value="{$user.agent_brand}"]').attr('selected', 'selected');
+	 $('[name="agent_level{$k}"]').find('option[value="{$user.agent_level}"]').attr('selected', 'selected');
+	
+	  $('[name="is_ok{$k}"]').each(function(index, element) {
+		 
+        if ($(element).val() == {$user.is_ok}) {
+			
+			$(element).attr('checked', true);
+		}
+    });
+
+ {/foreach}
+ });
+ </script>
+
+   <!-- end下拉菜单 代理品牌和等级 huo15 -->
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  {if $form_action eq "update"}
+  <tr style="display:none">
+    <td class="label">{$lang.user_money}:</td>
+    <td>{$user.formated_user_money} <a href="account_log.php?act=list&user_id={$user.user_id}&account_type=user_money">[ {$lang.view_detail_account} ]</a> </td>
+  </tr>
+  <tr  style="display:none">
+    <td class="label">{$lang.frozen_money}:</td>
+    <td>{$user.formated_frozen_money} <a href="account_log.php?act=list&user_id={$user.user_id}&account_type=frozen_money">[ {$lang.view_detail_account} ]</a> </td>
+  </tr>
+  <tr style="display:none">
+    <td class="label" ><a href="javascript:showNotice('noticeRankPoints');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.rank_points}:</td>
+    <td>{$user.rank_points} <a href="account_log.php?act=list&user_id={$user.user_id}&account_type=rank_points">[ {$lang.view_detail_account} ]</a> <br /><span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeRankPoints">{$lang.notice_rank_points}</span></td>
+  </tr>
+  <tr style="display:none">
+    <td class="label" ><a href="javascript:showNotice('noticePayPoints');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}" /></a> {$lang.pay_points}:</td>
+    <td>{$user.pay_points} <a href="account_log.php?act=list&user_id={$user.user_id}&account_type=pay_points">[ {$lang.view_detail_account} ]</a> <br />
+        <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticePayPoints">{$lang.notice_pay_points}</span></td>
+  </tr>
+  {/if}
+  <tr  style="display:none">
+    <td class="label">{$lang.email}:</td>
+    <td><input type="text" name="email" maxlength="60" size="40" value="{$user.email}" />{$lang.require_field}</td>
+  </tr>
+  {if $form_action eq "insert"}
+  <tr>
+    <td class="label">密码：</td>
+    <td><input class="inputBg" type="password" name="password" maxlength="20" size="20" />{$lang.require_field}</td>
+  </tr>
+  <tr>
+    <td class="label">确认密码:</td>
+    <td><input  class="inputBg" type="password" name="confirm_password" maxlength="20" size="20" />{$lang.require_field}</td>
+  </tr>
+  {elseif  $form_action eq "update"}
+  <tr>
+    <td class="label">密码:</td>
+    <td><input  class="inputBg" type="password" name="password" maxlength="20" size="20" /></td>
+  </tr>
+  <tr>
+    <td class="label">确认密码:</td>
+    <td><input  class="inputBg" type="password" name="confirm_password" maxlength="20" size="20" /></td>
+  </tr>
+  {/if}
+  <tr  style="display:none">
+    <td class="label">{$lang.user_rank}:</td>
+    <td><select name="user_rank">
+      <option value="0">{$lang.not_special_rank}</option>
+      {html_options options=$special_ranks selected=$user.user_rank}
+    </select></td>
+  </tr>
+  <tr  style="display:none">
+    <td class="label">{$lang.gender}:</td>
+    <td>{html_radios name="sex" options=$lang.sex checked=$user.sex }</td>
+  </tr>
+  <tr  style="display:none">
+    <td class="label">{$lang.birthday}:</td>
+    <td>{html_select_date field_order="YMD" prefix="birthday" time=$user.birthday start_year="-60" end_year="+1" display_days=true month_format="%m"}</td>
+  </tr>
+  <tr  style="display:none">
+    <td class="label">{$lang.credit_line}:</td>
+    <td><input name="credit_line" type="text" id="credit_line" value="{$user.credit_line}" size="10" /></td>
+  </tr>
+  
+  {foreach from=$extend_info_list item=field}
+  <tr>
+    <td class="label">{$field.reg_field_name}:</td>
+    <td>
+    {if $field.reg_field_name eq '性别'}
+    
+    男<input name="extend_field{$field.id}" type="radio" size=""  value="0" {if $field.content}{else}checked="checked"{/if} />
+     女<input name="extend_field{$field.id}" type="radio" size=""  value="1" {if $field.content} checked="checked"{else}{/if}/>
+     {elseif $field.field_type eq 4}
+     	{if $field.content}{else}<input type="file" name="extend_field{$field.id}" /><br/>{/if}
+     
+         <img src="WEB_PATH{$field.content}" alt="头像图片" style="max-height:300px;" />
+     {else}
+    <input name="extend_field{$field.id}" type="text" size="40" class="inputBg" value="{$field.content}"/>
+    {/if}
+    </td>
+  </tr>
+  {/foreach}
+  {if $user.parent_id}
+  <tr>
+    <td class="label">{$lang.parent_user}:</td>
+    <td><a href="users.php?act=edit&id={$user.parent_id}">{$user.parent_username}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="users.php?act=remove_parent&id={$user.user_id}">{$lang.parent_remove}</a></td>
+  </tr>
+  {/if}
+  {if $affiliate.on eq 1 && $affdb}
+  <tr>
+    <td class="label">{$lang.affiliate_user}:</td>
+    <td>[<a href="users.php?act=aff_list&auid={$user.user_id}">{$lang.show_affiliate_users}</a>][<a href="affiliate_ck.php?act=list&auid={$user.user_id}">{$lang.show_affiliate_orders}</a>]</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>   
+    <table border="0" cellspacing="1" style="background: #dddddd; width:30%;">
+    <tr>
+    <td bgcolor="#ffffff">{$lang.affiliate_lever}</td>
+    {foreach from=$affdb key=level item=val0}
+    <td bgcolor="#ffffff">{$level}</td>
+    {/foreach}
+    </tr>
+    <tr>
+    <td bgcolor="#ffffff">{$lang.affiliate_num}</td>
+    {foreach from=$affdb item=val}
+    <td bgcolor="#ffffff">{$val.num}</td>
+    {/foreach}
+    </tr>
+    </table>
+    </td>
+  </tr>
+  {/if}
+  <tr>
+    <td colspan="2" align="center">
+      <input type="submit" value="提交" class="button" />
+      <input type="hidden" name="act" value="update_agent_do" />
+      <input type="hidden" name="id" value="{$user_id}" />    </td>
+  </tr>
+</table>
+
+</form>
+<!-- {/if} -->
+
+<!-- end huo15 用户个人信息修改页面 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  huo15 用户授权证书 -->
+<!-- {if $action eq 'certification'} -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=2.0, user-scalable=yes" /> 
+ <style>
+ 	.agent_bg {
+		position:relative;
+	}
+		
+ 	p {
+		position:absolute;
+		color:#fff;
+		font-size:1.8em;
+		font-family:"微软雅黑";
+	}
+	p.black {
+		color:#000;
+	}
+	p.line1 {
+		left:250px;
+		top:285px;
+	}
+	p.line1 span.wx {
+		margin-left:150px;
+	}
+	p.line1 span.phone {
+		margin-left:100px;
+	}
+	p.line2 {
+		left:240px;
+		top:325px;
+	}
+	p.line3 {
+		font-size:1.5em;
+		left:170px;
+		top:420px;
+	}
+	p.line4 {
+		font-size:1.5em;
+		left:270px;
+		top:465px;
+	}
+	p.line5 {
+		font-size:3em;
+		left:350px;
+		top:380px;
+		font-weight:bold;
+	}
+ 	.agent_bg {
+		width:900px;
+		height:650px;
+		margin:1em auto;
+	}
+ </style>
+    <!-- {foreach from=$agent_arr item=v} -->
+         <!-- {if $v.is_ok} -->
+         
+         <div class="agent_bg" style="background:url(/mobile/images/{if $v.agent_brand eq 'AL'}al.jpg{else}msg.jpg{/if})">
+         	
+         	
+            <p class="line1 {if $v.agent_brand eq 'AL'}black{/if}"><span class="name">{$v.name}</span><span class="wx">{$v.wx}</span><span class="phone">{$v.phone}</span></p>
+           <!-- {if $v.agent_brand eq 'AL'} -->
+            <p class="line2 {if $v.agent_brand eq 'AL'}black{/if}"><span>{$v.agent_brand}</span></p>
+           <!-- {/if} -->
+           <!-- {if $v.start_date} -->
+            <p class="line3 {if $v.agent_brand eq 'AL'}black{/if}"><span>授权日期：</span><span>{$v.start_date}</span> <span>&nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;</span> <span>{$v.end_date}</span></p>
+            <!-- {/if} -->
+            <p class="line4 {if $v.agent_brand eq 'AL'}black{/if}"><span>{$v.no}</span></p>
+            <p class="line5 {if $v.agent_brand eq 'AL'}black{/if}"><span>{$v.agent_name}</span></p>
+              
+            
+         </div>
+		 <!-- {/if} -->
+    <!-- {/foreach} -->
+
+<!-- {/if} -->
+
+<!-- end huo15 用户授权证书 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  huo15 下级代理信息审核与修改 -->
+<!-- {if $action eq 'update_agent'} -->
+<form method="post" action="distribute.php" name="theForm" onsubmit="return validate()" enctype="multipart/form-data">
+<table width="95%" style="margin:0 auto;" >
+  <tr>
+    <td class="label">{$lang.username}:</td>
+    <td>{if $form_action eq "update"}{$user.user_name}<input type="hidden" name="username" value="{$user.user_name}" />{else}<input type="text" name="username" maxlength="60" value="{$user.user_name}" />{$lang.require_field}{/if}</td>
+  </tr>
+    <tr style="display:none">
+    <td class="label">会员号:</td>
+    <td>{$user.user_num}</td>
+  </tr>
+  <!-- 下拉菜单 代理品牌和等级 huo15 -->
+  <script>
+  var brand_name_option = '<option value="not">请选择</option>';
+  var obj_check = {};
+   {foreach from=$arrBAndL item=BAndL  key=key}
+   	var agent_level_option_s{$key} = {$BAndL.start_num};
+    var agent_level_option_d{$key} = {$BAndL.end_num};
+	 brand_name_option = brand_name_option + '<option value="{$BAndL.agent_brand}">{$BAndL.agent_brand}</option>';
+	 obj_check.c{$key} = {};
+	 obj_check.c{$key}.brand = '{$BAndL.agent_brand}';
+	 obj_check.c{$key}.start_num = {$BAndL.start_num};
+	 obj_check.c{$key}.end_num = {$BAndL.end_num};
+   {/foreach}
+ 
+	  
+	
+   
+   </script>
+   
+ 
+  {foreach from=$user.brand_info item=BAndL  key=key}
+  
+   <tr>
+    <td class="label">代理品牌:</td>
+    
+    <td><select class="brand_name_option" name="agent_brand{$key}" > 
+   	
+    </select>
+    代理等级：<select name="agent_level{$key}" >
+    	{$BAndL.option}
+    </select>
+    </td>
+  </tr>
+ <tr >
+   <td class="label">授权日期:</td>
+    <td><input name="start_date{$key}" type="text" class="datepicker"  {if $BAndL.start_date}value="{$BAndL.start_date}"{else}{/if}  />&nbsp;&nbsp;至&nbsp;&nbsp;<input class="datepicker" name="end_date{$key}" type="text"  {if $BAndL.end_date}value="{$BAndL.end_date}"{else}{/if}  /></td>
+  </tr>
+  <tr >
+   <td class="label">审核状态:</td>
+    <td>通过<input name="is_ok{$key}" type="radio"  {if $user.is_ok  eq '1'}checked="checked"{else}{/if}  value="1" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;未审核<input name="is_ok{$key}" type="radio"  {if $user.is_ok  eq '1'}{else}checked="checked"{/if} value="0" /></td>
+  </tr>
+  <br/>
+  <tr>
+  	<td style="height:0.3em;background:#333;"></td><td style="height:0.3em;background:#333;"></td>
+  </tr>
+  
+  
+ {/foreach}
+ <script>
+  //更改选择项目
+	 $('.brand_name_option').each(function(index, element) {
+        $(element).html(brand_name_option);
+    });
+ $(function () {
+ {foreach from=$user.brand_info item=user  key=k}
+ 	var agent_brand{$k} = '{$user.agent_brand}';
+    var agent_level{$k} = {$user.agent_level};
+	var agent_is_ok{$k} = {$user.is_ok};
+	
+	 
+	 //$('[name="agent_brand{$k}"]').find('option[value="{$user.agent_brand}"]').attr('selected', 'selected');
+	 $('[name="agent_brand{$k}"]').find('option[value="{$user.agent_brand}"]').prop('selected', 'selected');
+	
+	// $('[name="agent_level{$k}"]').find('option[value="{$user.agent_level}"]').attr('selected', 'selected');
+	 $('[name="agent_level{$k}"]').find('option[value="{$user.agent_level}"]').prop('selected', 'selected');
+	 
+	  $('[name="is_ok{$k}"]').each(function(index, element) {
+		 
+        if ($(element).val() == {$user.is_ok}) {
+			
+			$(element).attr('checked', true);
+			$(element).prop('checked', true);
+		}
+    });
+
+ {/foreach}
+ 
+ 	//点击下拉菜单更改下拉状态
+	
+	 $('.brand_name_option').each(function(index, element) {
+    	
+		
+			
+				
+				$(element).change(function () {
+					//alert($('[name="agent_level'+ index +'"]').attr('name'));
+					{foreach from=$arrBAndL item=BAndL  key=key}
+					if ($(element).find('option:selected').val() == '{$BAndL.agent_brand}')
+					$('[name="agent_level'+ index +'"]').html('{$BAndL.option}');
+					{/foreach}
+				});
+			
+		
+	});
+	
+	
+	//日期选择
+	$('.datepicker').each(function(index, element) {
+        $(element).datepicker();
+    });
+	
+	
+ });
+ </script>
+
+   <!-- end下拉菜单 代理品牌和等级 huo15 -->
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  {if $form_action eq "update"}
+  <tr style="display:none">
+    <td class="label">{$lang.user_money}:</td>
+    <td>{$user.formated_user_money} <a href="account_log.php?act=list&user_id={$user.user_id}&account_type=user_money">[ {$lang.view_detail_account} ]</a> </td>
+  </tr>
+  <tr  style="display:none">
+    <td class="label">{$lang.frozen_money}:</td>
+    <td>{$user.formated_frozen_money} <a href="account_log.php?act=list&user_id={$user.user_id}&account_type=frozen_money">[ {$lang.view_detail_account} ]</a> </td>
+  </tr>
+  <tr style="display:none">
+    <td class="label" ><a href="javascript:showNotice('noticeRankPoints');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.rank_points}:</td>
+    <td>{$user.rank_points} <a href="account_log.php?act=list&user_id={$user.user_id}&account_type=rank_points">[ {$lang.view_detail_account} ]</a> <br /><span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeRankPoints">{$lang.notice_rank_points}</span></td>
+  </tr>
+  <tr style="display:none">
+    <td class="label" ><a href="javascript:showNotice('noticePayPoints');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}" /></a> {$lang.pay_points}:</td>
+    <td>{$user.pay_points} <a href="account_log.php?act=list&user_id={$user.user_id}&account_type=pay_points">[ {$lang.view_detail_account} ]</a> <br />
+        <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticePayPoints">{$lang.notice_pay_points}</span></td>
+  </tr>
+  {/if}
+  <tr  style="display:none">
+    <td class="label">{$lang.email}:</td>
+    <td><input type="text" name="email" maxlength="60" size="40" value="{$user.email}" />{$lang.require_field}</td>
+  </tr>
+  {if $form_action eq "insert"}
+  <tr>
+    <td class="label">密码：</td>
+    <td><input class="inputBg" type="password" name="password" maxlength="20" size="20" />{$lang.require_field}</td>
+  </tr>
+  <tr>
+    <td class="label">确认密码:</td>
+    <td><input  class="inputBg" type="password" name="confirm_password" maxlength="20" size="20" />{$lang.require_field}</td>
+  </tr>
+  {elseif  $form_action eq "update"}
+  <tr>
+    <td class="label">密码:</td>
+    <td><input  class="inputBg" type="password" name="password" maxlength="20" size="20" /></td>
+  </tr>
+  <tr>
+    <td class="label">确认密码:</td>
+    <td><input  class="inputBg" type="password" name="confirm_password" maxlength="20" size="20" /></td>
+  </tr>
+  {/if}
+  <tr  style="display:none">
+    <td class="label">{$lang.user_rank}:</td>
+    <td><select name="user_rank">
+      <option value="0">{$lang.not_special_rank}</option>
+      {html_options options=$special_ranks selected=$user.user_rank}
+    </select></td>
+  </tr>
+  <tr  style="display:none">
+    <td class="label">{$lang.gender}:</td>
+    <td>{html_radios name="sex" options=$lang.sex checked=$user.sex }</td>
+  </tr>
+  <tr  style="display:none">
+    <td class="label">{$lang.birthday}:</td>
+    <td>{html_select_date field_order="YMD" prefix="birthday" time=$user.birthday start_year="-60" end_year="+1" display_days=true month_format="%m"}</td>
+  </tr>
+  <tr  style="display:none">
+    <td class="label">{$lang.credit_line}:</td>
+    <td><input name="credit_line" type="text" id="credit_line" value="{$user.credit_line}" size="10" /></td>
+  </tr>
+  
+  {foreach from=$extend_info_list item=field}
+  <tr>
+    <td class="label">{$field.reg_field_name}:</td>
+    <td>
+    {if $field.reg_field_name eq '性别'}
+    
+    男<input name="extend_field{$field.id}" type="radio" size=""  value="0" {if $field.content}{else}checked="checked"{/if} />
+     女<input name="extend_field{$field.id}" type="radio" size=""  value="1" {if $field.content} checked="checked"{else}{/if}/>
+     {elseif $field.field_type eq 4}
+     	{if $field.content}{else}<input type="file" name="extend_field{$field.id}" /><br/>{/if}
+     
+         <img src="WEB_PATH{$field.content}" alt="头像图片" style="max-height:300px;" />
+     {else}
+    <input name="extend_field{$field.id}" type="text" size="40" class="inputBg" value="{$field.content}"/>
+    {/if}
+    </td>
+  </tr>
+  {/foreach}
+  {if $user.parent_id}
+  <tr>
+    <td class="label">{$lang.parent_user}:</td>
+    <td><a href="users.php?act=edit&id={$user.parent_id}">{$user.parent_username}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="users.php?act=remove_parent&id={$user.user_id}">{$lang.parent_remove}</a></td>
+  </tr>
+  {/if}
+  {if $affiliate.on eq 1 && $affdb}
+  <tr>
+    <td class="label">{$lang.affiliate_user}:</td>
+    <td>[<a href="users.php?act=aff_list&auid={$user.user_id}">{$lang.show_affiliate_users}</a>][<a href="affiliate_ck.php?act=list&auid={$user.user_id}">{$lang.show_affiliate_orders}</a>]</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>   
+    <table border="0" cellspacing="1" style="background: #dddddd; width:30%;">
+    <tr>
+    <td bgcolor="#ffffff">{$lang.affiliate_lever}</td>
+    {foreach from=$affdb key=level item=val0}
+    <td bgcolor="#ffffff">{$level}</td>
+    {/foreach}
+    </tr>
+    <tr>
+    <td bgcolor="#ffffff">{$lang.affiliate_num}</td>
+    {foreach from=$affdb item=val}
+    <td bgcolor="#ffffff">{$val.num}</td>
+    {/foreach}
+    </tr>
+    </table>
+    </td>
+  </tr>
+  {/if}
+  <tr>
+    <td colspan="2" align="center">
+      <input type="submit" value="提交" class="button" />
+      <input type="hidden" name="act" value="update_agent_do" />
+      <input type="hidden" name="id" value="{$user_id}" />    </td>
+  </tr>
+</table>
+
+</form>
+<!-- {/if} -->
+
+
+
+
+
+
+<!-- {if $action eq 'generate'} --> 
+
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <h1>生成邀请链接</h1>
+</header>
+
+<section class="class="wrap"">
+<div class="content">
+  
+   
+    
+        	<dl>
+        	  <div>
+              
+                <div id="link_div">
+                               <!-- <input type="text" id="mylink" size="100"   />--><input type="button" id="mybtn" value="点击生成链接" />    <br/><br/><br/> <img src="" id="myimg" alt="请点击生成邀请链接，在这里生成图片" /></div>
+                        </div>
+            </dl>
+       
+	
+
+  
+  </div>
+</section>
+<!-- {/if} --> 
+<!-- /五级分销 	E-->
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
+</body>
+<script type="text/javascript">
+{foreach from=$lang.clips_js item=item key=key}
+var {$key} = "{$item}";
+{/foreach}
+
+$(function () {
+	
+	
+	var linkTxt = encodeURI("http://" + window.location.host + "/mobile/user.php?act=register&u={$u}");
+	var linkTxt = encodeURIComponent("http://" + window.location.host + "/mobile/user.php?act=register&u={$u}");
+	$('#mybtn').click(function(){
+		//alert(linkTxt);
+		alert('邀请二维码生成成功！请等待加载。长按二维码即可打开邀请页！');
+	
+	
+	
+	
+	$('#mylink').val(linkTxt);
+$('#myimg').removeAttr('src');
+	
+	$('#mylink').val(linkTxt);
+$('#myimg').attr('src', 
+		"http://qr.liantu.com/api.php?w=200&text=" + linkTxt
+	);
+	
+	
+
+	
+	
+	
+	
+	
+	});
+	
+	
+
+function removeYq() {
+	$('#link_div').empty();
+	
+	$('#link_div').append('<input type="text" id="mylink" size="100"   /><br/><br/><br/> <img src="" id="myimg" alt="请重新生成链接"/>');
+}
+});
+
+
+
+
+//huo15  代理业务点击事件
+//代理商业务订单全部列表
+
+$('#agent_money_sum').click(function () {
+	window.location = "user.php?act=agent_order_list";
+});
+//未发货完结订单
+$('#agent_scan_list').click(function () {
+	window.location = "user.php?act=agent_scan_list";
+});
+//未付款列表
+$('#agent_unpay_list').click(function () {
+	window.location = "user.php?act=agent_unpay_list";
+});
+
+//已经付款列表
+$('#agent_pay_list').click(function () {
+	window.location = "user.php?act=agent_pay_list";
+});
+
+//已经发货列表
+$('#agent_done_list').click(function () {
+	window.location = "user.php?act=agent_done_list";
+});
+
+//手动添加订单，代理系统
+$('#agent_add_order').click(function () {
+	window.location = "user.php?act=agent_add_order";
+});
+
+
+//手动添加订单，垂直业务
+$('#self_add_order').click(function () {
+	window.location = "user.php?act=user_add_order";
+});
+
+//全部订单订单，垂直业务
+$('#self_list').click(function () {
+	window.location = "huo15user.php?act=user_order_list";
+});
+
+//扫码订单，垂直业务
+$('#self_scan_order').click(function () {
+	window.location = "huo15user.php?act=user_scan_list";
+});
+
+//已发货订单，垂直业务
+$('#self_end_order').click(function () {
+	window.location = "huo15user.php?act=user_end_list";
+});
+function copyToClipboard(maintext){
+  if (window.clipboardData){
+    window.clipboardData.setData("Text", maintext);
+    }else if (window.netscape){
+      try{
+        netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+    }catch(e){
+        alert("该浏览器不支持一键复制！n请手工复制文本框链接地址～");
+    }
+
+    var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
+    if (!clip) return;
+    var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
+    if (!trans) return;
+    trans.addDataFlavor('text/unicode');
+    var str = new Object();
+    var len = new Object();
+    var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+    var copytext=maintext;
+    str.data=copytext;
+    trans.setTransferData("text/unicode",str,copytext.length*2);
+    var clipid=Components.interfaces.nsIClipboard;
+    if (!clip) return false;
+    clip.setData(trans,null,clipid.kGlobalClipboard);
+  }
+  alert("以下内容已经复制到剪贴板nn" + maintext);
+}
+</script>
+</html>

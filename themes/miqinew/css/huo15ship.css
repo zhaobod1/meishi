@@ -1,0 +1,49 @@
+
+@charset "utf-8";
+/* ====================
+     公共样式
+==================== */
+.alignCenter {
+	text-align:center;
+}
+#huo15_goods_content {
+	color:#fff;
+}
+#huo15_goods_content caption {
+	height:2.5rem;
+	line-height:2.5rem;
+	background:#CCC;
+	
+}
+thead {
+	color:#000;
+	height:2rem;
+	background:#fff;
+}
+#huo15_goods_content caption span.no_huo15 {
+	color:#09F;
+}
+#huo15_goods_content tbody tr {
+	border:1px solid #333;
+	margin:3px;
+}
+#huo15_goods_content tbody tr td {
+	padding:8px;
+}
+#huo15_goods_content tbody tr td.huo15NoC {
+	color:black;
+}
+#huo15_goods_content tbody tr td.del_huo15_no {
+	border:1px solid #333;
+	text-align:center;
+	margin:8px;
+}
+
+/* 火一五信息科技 代理商系统添加订单页面*/
+.consignee {
+	margin-top:1em;
+	background:#CCC;
+}
+.displayNone {
+	display:none;
+}
